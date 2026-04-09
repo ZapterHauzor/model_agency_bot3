@@ -1,0 +1,78 @@
+app/
+├── domain/
+│   ├── entities/
+│   │   ├── user.py           # Telegram пользователь
+│   │   ├── model.py          # Модель
+│   │   ├── order.py          # Заказ (съёмка)
+│   │   └── payment.py        # Платёж
+│   └── repositories/
+│       ├── user_repository.py
+│       ├── model_repository.py
+│       └── order_repository.py
+│
+├── application/
+│   ├── services/
+│   │   ├── booking_service.py    # Создание заказа
+│   │   ├── payment_service.py    # Проверка оплаты USDT
+│   │   └── notification_service.py # Уведомления оператору
+│   └── dto/
+│       ├── order_dto.py
+│       └── payment_dto.py
+│
+├── infrastructure/
+│   ├── database/
+│   │   ├── models/            # SQLAlchemy ORM
+│   │   ├── repositories/      # Реализации репозиториев
+│   │   └── uow.py            # Unit of Work
+│   ├── blockchain/
+│   │   └── tron_client.py    # Проверка USDT транзакций
+│   └── dependencies.py        # Dishka контейнер
+│
+├── presentation/
+│   └── bot/
+│       ├── dialogs/           # 🔥 aiogram-dialog сценарии
+│       │   ├── city_dialog.py     # Выбор города
+│       │   ├── model_dialog.py    # Список моделей → анкета
+│       │   ├── booking_dialog.py  # Выбор времени → оплата
+│       │   └── payment_dialog.py  # Ожидание чека
+│       ├── handlers/          # Обычные хендлеры
+│       │   ├── start.py
+│       │   ├── support.py     # Пересылка оператору
+│       │   └── admin.py       # Админ-панель
+│       └── middlewares/
+│           └── db_session.py  # Внедрение сессии через Dishka
+│
+├── common/
+│   ├── constants.py           # Цены, города, время съёмки
+│   └── utils.py
+│
+└── config.py                  # Pydantic настройки
+
+
+
+
+
+
+# Твой базовый стек (оставляем)
+aiogram==3.13.0
+dishka==0.12.0
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+
+# Добавляем под твои требования
+alembic==1.14.1              # миграции
+aiogram-dialog==2.1.0        # 🔥 многошаговые диалоги
+redis==5.0.1                 # для FSM storage
+aioredis==2.0.1              # асинхронный Redis
+
+# Для админ-панели (простая, через Telegram)
+aiogram-fsm-admin==1.0.0     # или напишем свою кастомную
+
+# Утилиты
+loguru==0.7.2                # логирование
+python-dotenv==1.0.1         # уже есть
+
+# Для промокодов (пока заглушка, но задел)
+pydantic-extra-types==2.0.0  # для валидации промокодов
