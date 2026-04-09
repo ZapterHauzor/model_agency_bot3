@@ -3,6 +3,7 @@ from aiogram import Bot, Dispatcher
 from aiogram_dialog import setup_dialogs
 from app.core.config import settings
 from app.presentation.bot.dialogs.booking_dialog import booking_dialog
+from app.presentation.bot.handlers.start import router as start_router
 
 async def main():
     # ✅ Правильно:直接用 settings.bot_token
@@ -11,6 +12,9 @@ async def main():
     
     # Регистрируем диалог
     dp.include_router(booking_dialog)
+
+    # Регистрируем обработчики
+    dp.include_router(start_router)
     
     # Включаем поддержку диалогов
     setup_dialogs(dp)

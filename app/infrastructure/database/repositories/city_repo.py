@@ -1,14 +1,18 @@
 from typing import List
-from app.infrastructure.database.models.city import City
+from dataclasses import dataclass
 
-# Временная заглушка без БД
-async def get_all_cities() -> List[City]:
-    """Вернуть список всех городов (пока тестовые данные)"""
-    # TODO: Заменить на реальный запрос к БД
+# Простой dataclass вместо SQLAlchemy модели для тестов
+@dataclass
+class CityTest:
+    id: int
+    name: str
+
+async def get_all_cities() -> List[CityTest]:
+    """Вернуть список всех городов (тестовые данные без SQLAlchemy)"""
     return [
-        City(id=1, name="Москва"),
-        City(id=2, name="Санкт-Петербург"),
-        City(id=3, name="Казань"),
-        City(id=4, name="Новосибирск"),
-        City(id=5, name="Екатеринбург"),
+        CityTest(id=1, name="Москва"),
+        CityTest(id=2, name="Санкт-Петербург"),
+        CityTest(id=3, name="Казань"),
+        CityTest(id=4, name="Новосибирск"),
+        CityTest(id=5, name="Екатеринбург"),
     ]

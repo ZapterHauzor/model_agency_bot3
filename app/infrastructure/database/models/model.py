@@ -2,6 +2,9 @@ from sqlalchemy import String, Integer, Boolean, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.infrastructure.database.base import Base
 
+# 🔥 Импортируем City для аннотации типа
+from app.infrastructure.database.models.city import City
+
 class Model(Base):
     __tablename__ = "models"
     
@@ -17,4 +20,5 @@ class Model(Base):
     price_day: Mapped[int]
     is_active: Mapped[bool] = mapped_column(default=True)
     
+    # 🔥 Используем строковую ссылку
     city = relationship("City", back_populates="models")
