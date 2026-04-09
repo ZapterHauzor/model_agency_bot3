@@ -1,8 +1,6 @@
 from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import Message, CallbackQuery
-from aiogram_dialog.manager.manager import DialogManagerImpl
-from aiogram_dialog.manager.update import DialogUpdate
 
 class EditModeMiddleware(BaseMiddleware):
     async def __call__(
@@ -11,9 +9,13 @@ class EditModeMiddleware(BaseMiddleware):
         event: Message | CallbackQuery,
         data: Dict[str, Any]
     ) -> Any:
-        # Принудительно включаем edit_mode для всех диалогов
+        # Включаем edit_mode через dialog_data
         if "dialog_manager" in data:
-            dialog_manager: DialogManagerImpl = data["dialog_manager"]
-            if hasattr(dialog_manager, "update"):
-                dialog_manager.update.edit_mode = True
+            dialog_manager = data["dialog_manager"]
+            # Устанавливаем флаг edit_mode в текущем контексте
+            if hasattr(dialog_manager, "current_context"):
+                context = dialog_manager.current_context()
+                if context:
+                    context.dialog_data["_edit_mode"] = True
+        
         return await handler(event, data)

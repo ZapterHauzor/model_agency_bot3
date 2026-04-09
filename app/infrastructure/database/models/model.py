@@ -11,8 +11,8 @@ class Model(Base):
     age: Mapped[int]
     height: Mapped[int]
     weight: Mapped[int]
-    photo_file_id: Mapped[str] = mapped_column(Text)  # Telegram file_id
-    price_hour: Mapped[int]  # в USDT (цент)
+    photo_file_id: Mapped[str] = mapped_column(Text)
+    price_hour: Mapped[int]
     price_2hours: Mapped[int]
     price_day: Mapped[int]
     is_active: Mapped[bool] = mapped_column(default=True)
